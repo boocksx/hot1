@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch</title>
+<meta property="og:title" content="Watch Video">
+<meta property="og:description" content="Click to continue">
+<meta property="og:image" content="https://i.postimg.cc/tJxfZ70B/photo-2026-06-26-01-21-01.jpg">
+<meta property="og:type" content="website">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f0f0f;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+.box{
+    width:90%;
+    max-width:420px;
+    text-align:center;
+}
+img{
+    width:100%;
+    border-radius:12px;
+}
+h1{
+    font-size:20px;
+    margin:15px 0 10px;
+}
+p{
+    font-size:14px;
+    opacity:0.7;
+}
+a.button{
+    display:inline-block;
+    margin-top:15px;
+    padding:14px 20px;
+    background:#1877f2;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    width:100%;
+    pointer-events: none; /* по умолчанию неактивна */
+    opacity: 0.6;         /* слегка затемнена */
+}
+a.button.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+</style>
+</head>
+<body>
+<div class="box">
+    <img src="https://i.postimg.cc/tJxfZ70B/photo-2026-06-26-01-21-01.jpg">
+    <h1>Watch the full content</h1>
+    <p>Click below to continue</p>
+    <a id="continueBtn" class="button" href="https://grzvkg.datewiithyou.net/?utm_source=da57dc555e50572d&ban=fb&j1=1&s1=212364&s2=2263693">
+        Continue
+    </a>
+</div>
+
+<script>
+// Активируем кнопку только на Android и iOS
+function isMobile() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    
+    if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+        return true;
+    }
+    if (/android/i.test(ua)) {
+        return true;
+    }
+    return false;
+}
+
+window.onload = function() {
+    const btn = document.getElementById('continueBtn');
+    
+    if (isMobile()) {
+        btn.classList.add('active');
+    } else {
+        // На остальных устройствах кнопка видна, но не работает
+        btn.href = "#";           // бесполезная ссылка
+        btn.onclick = function(e) {
+            e.preventDefault();   // блокируем переход
+            return false;
+        };
+    }
+};
+</script>
+</body>
+</html>
