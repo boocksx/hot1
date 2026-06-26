@@ -3,219 +3,278 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Visual Collection</title>
-
-<meta property="og:title" content="Visual Collection">
-<meta property="og:description" content="Cinematic gallery experience">
-<meta property="og:image" content="https://i.postimg.cc/D03Vc1PY/photo-2026-06-26-01-21-01.jpg">
-<meta property="og:type" content="website">
+<title>Elite Car Collection</title>
 
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:#f4f4f4;
-color:#111;
-display:flex;
-justify-content:center;
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0a0a0a;
+  color:#fff;
+}
+
+header{
+  padding:90px 20px;
+  text-align:center;
+  background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') center/cover;
+}
+
+header h1{
+  background:rgba(0,0,0,0.6);
+  display:inline-block;
+  padding:14px 28px;
+  border-radius:14px;
 }
 
 .container{
-width:100%;
-max-width:800px;
-padding:20px;
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
 
-.header{
-text-align:center;
-margin-bottom:20px;
+.search{
+  text-align:center;
+  margin:20px 0;
 }
 
-.header h1{
-margin:0;
-font-size:24px;
-}
-
-.header p{
-margin-top:6px;
-opacity:0.6;
-font-size:14px;
+.search input{
+  width:80%;
+  max-width:420px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
 }
 
 .grid{
-display:grid;
-grid-template-columns:1fr;
-gap:18px;
-}
-
-@media(min-width:700px){
-.grid{grid-template-columns:1fr 1fr;}
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:15px;
 }
 
 .card{
-background:white;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
-cursor:pointer;
+  background:#161616;
+  border-radius:14px;
+  overflow:hidden;
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.card:hover{
+  transform:translateY(-6px);
 }
 
 .card img{
-width:100%;
-display:block;
+  width:100%;
+  height:160px;
+  object-fit:cover;
 }
 
-.content{
-padding:12px 14px;
+.card-body{
+  padding:12px;
 }
 
-.title{
-font-size:16px;
-font-weight:bold;
-margin-bottom:6px;
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:#ff9800;
+  font-weight:bold;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-.desc{
-font-size:13px;
-color:#555;
-line-height:1.4;
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
 }
 
-/* POPUP */
-.overlay{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.75);
-justify-content:center;
-align-items:center;
-z-index:999;
+.modal-box{
+  background:#fff;
+  color:#000;
+  width:320px;
+  border-radius:12px;
+  padding:15px;
 }
 
-.popup{
-background:#fff;
-padding:20px;
-border-radius:12px;
-width:90%;
-max-width:360px;
-text-align:center;
+/* STICKY CTA */
+.cta{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#ff9800;
+  color:#000;
+  text-align:center;
+  padding:12px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.btn{
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
+/* EXIT POPUP */
+.exit{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
 }
 
-.ok{
-background:#1877f2;
-color:white;
-}
-
-.cancel{
-background:#eee;
+.exit-box{
+  background:#fff;
+  color:#000;
+  padding:20px;
+  width:300px;
+  border-radius:12px;
+  text-align:center;
 }
 </style>
-
 </head>
 
 <body>
 
+<header>
+<h1 id="title">Elite Car Collection</h1>
+</header>
+
 <div class="container">
 
-<div class="header">
-<h1>Visual Collection</h1>
-<p>Click any image to continue</p>
+<div class="search">
+<input id="search" placeholder="Search cars..." onkeyup="filterCars()">
 </div>
 
-<div class="grid">
+<div class="grid" id="grid">
 
-<div class="card" onclick="openGate()">
-<img src="https://i.postimg.cc/D03Vc1PY/photo-2026-06-26-01-21-01.jpg">
-<div class="content">
-<div class="title">Golden Hour Scene</div>
-<div class="desc">Cinematic warm lighting and premium visual atmosphere.</div>
-</div>
-</div>
-
-<div class="card" onclick="openGate()">
-<img src="https://i.postimg.cc/sDcFpQGr/photo-2026-06-26-01-21-18.jpg">
-<div class="content">
-<div class="title">Urban Portrait</div>
-<div class="desc">Modern portrait with cinematic depth and contrast.</div>
+<!-- 10 CARS -->
+<div class="card" onclick="openCar('BMW M5', '625 HP • 3.3s • AWD')">
+<img src="https://images.unsplash.com/photo-1616788494707-ec28f08f0d74">
+<div class="card-body">
+<h3>BMW M5</h3>
+<p>Sport Sedan</p>
+<button>View Specs</button>
 </div>
 </div>
 
-<div class="card" onclick="openGate()">
-<img src="https://i.postimg.cc/bNTXQDDC/photo-2026-06-26-01-21-16.jpg">
-<div class="content">
-<div class="title">Detail Frame</div>
-<div class="desc">Close-up composition focused on mood and texture.</div>
+<div class="card" onclick="openCar('Mercedes C63', '503 HP • V8 • RWD')">
+<img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a">
+<div class="card-body">
+<h3>Mercedes C63</h3>
+<p>Luxury Sport</p>
 </div>
 </div>
 
-<div class="card" onclick="openGate()">
-<img src="https://i.postimg.cc/VL1QrB6V/photo-2026-06-26-01-21-13.jpg">
-<div class="content">
-<div class="title">Atmosphere Shot</div>
-<div class="desc">Balanced cinematic frame with storytelling feel.</div>
+<div class="card" onclick="openCar('Audi RS6', '600 HP • AWD • 3.6s')">
+<img src="https://images.unsplash.com/photo-1617531653332-bd46c24f198d">
+<div class="card-body"><h3>Audi RS6</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Porsche 911', '580 HP • AWD • 3.0s')">
+<img src="https://images.unsplash.com/photo-1502877338535-766e1452684a">
+<div class="card-body"><h3>Porsche 911</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Tesla Model S', '1020 HP • EV • 2.1s')">
+<img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a">
+<div class="card-body"><h3>Tesla Model S</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Toyota Supra', '382 HP • Turbo')">
+<img src="https://images.unsplash.com/photo-1620891549027-942fdc95d3f5">
+<div class="card-body"><h3>Toyota Supra</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Nissan GT-R', '565 HP • AWD')">
+<img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6">
+<div class="card-body"><h3>Nissan GT-R</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Ford Mustang', '450 HP • V8')">
+<img src="https://images.unsplash.com/photo-1614200187524-dc4b892acf16">
+<div class="card-body"><h3>Mustang</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Lexus LC500', '471 HP • Luxury')">
+<img src="https://images.unsplash.com/photo-1603386329225-868f9b1ee6b0">
+<div class="card-body"><h3>Lexus LC500</h3></div>
+</div>
+
+<div class="card" onclick="openCar('Honda Civic Type R', '320 HP • FWD')">
+<img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a">
+<div class="card-body"><h3>Civic Type R</h3></div>
+</div>
+
 </div>
 </div>
 
-<div class="card" onclick="openGate()">
-<img src="https://i.postimg.cc/gkdFXqJX/photo-2026-06-26-01-21-11.jpg">
-<div class="content">
-<div class="title">Lifestyle Capture</div>
-<div class="desc">Natural aesthetic with soft lighting tones.</div>
-</div>
-</div>
-
-<div class="card" onclick="openGate()">
-<img src="https://i.postimg.cc/ry52wY8p/photo-2026-06-26-01-21-08.jpg">
-<div class="content">
-<div class="title">Final Scene</div>
-<div class="desc">Closing cinematic visual of the collection.</div>
-</div>
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h2 id="carName"></h2>
+    <p id="carSpecs"></p>
+    <button onclick="goOffer()">Unlock Full Specs</button>
+    <br><br>
+    <button onclick="closeModal()" style="background:#ccc;">Close</button>
+  </div>
 </div>
 
+<!-- STICKY CTA -->
+<div class="cta" onclick="goOffer()">
+🔥 Unlock Full Car Database
 </div>
 
-</div>
-
-<!-- AGE GATE -->
-<div class="overlay" id="overlay">
-  <div class="popup">
-    <h3>Age verification</h3>
-    <p>You must be 18+ to continue</p>
-
-    <button class="btn ok" onclick="goOffer()">I am 18+</button>
-    <button class="btn cancel" onclick="closeGate()">Cancel</button>
+<!-- EXIT POPUP -->
+<div class="exit" id="exit">
+  <div class="exit-box">
+    <h2>Wait!</h2>
+    <p>Don’t miss full specs & hidden offers</p>
+    <button onclick="goOffer()">Continue</button>
+    <button onclick="closeExit()" style="background:#ccc;">Close</button>
   </div>
 </div>
 
 <script>
 
-// 🔗 ВСТАВЬ СЮДА СВОЮ ССЫЛКУ
-const OFFER_URL = "https://grzvkg.datewiithyou.net/?utm_source=da57dc555e50572d&ban=fb&j1=1&s1=212364&s2=2263693";
-
-function openGate(){
-  document.getElementById("overlay").style.display = "flex";
+function openCar(name, specs){
+  document.getElementById("carName").innerText = name;
+  document.getElementById("carSpecs").innerText = specs;
+  document.getElementById("modal").style.display = "flex";
 }
 
-function closeGate(){
-  document.getElementById("overlay").style.display = "none";
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
 }
 
 function goOffer(){
-  window.location.href = OFFER_URL;
+  window.location.href = "https://your-offer-link.com";
+}
+
+/* SEARCH */
+function filterCars(){
+  let val = document.getElementById("search").value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(c=>{
+    let t = c.innerText.toLowerCase();
+    c.style.display = t.includes(val) ? "block" : "none";
+  });
+}
+
+/* EXIT INTENT */
+document.addEventListener("mouseleave", function(e){
+  if(e.clientY < 10){
+    document.getElementById("exit").style.display = "flex";
+  }
+});
+
+function closeExit(){
+  document.getElementById("exit").style.display = "none";
 }
 
 </script>
