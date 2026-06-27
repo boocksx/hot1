@@ -3,219 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Car Collection</title>
+<title>Private Gallery</title>
+
 <style>
 body{
   margin:0;
-  font-family: Arial, sans-serif;
+  font-family:Arial;
   background:#0b0b0b;
   color:#fff;
 }
+
 header{
-  padding:80px 20px;
   text-align:center;
-  background:url('https://images.unsplash.com/photo-1494905998402-395d579af36f') center/cover;
-  background-size:cover;
+  padding:30px 15px;
 }
+
 header h1{
-  background:rgba(0,0,0,0.6);
-  display:inline-block;
-  padding:12px 25px;
-  border-radius:12px;
+  color:#ff4d88;
 }
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+  padding:15px;
 }
+
 .card{
-  background:#161616;
-  border-radius:14px;
+  background:#1a1a1a;
+  border-radius:12px;
   overflow:hidden;
-  padding-bottom:10px;
+  cursor:pointer;
+  transition:0.2s;
 }
+
+.card:hover{
+  transform:scale(1.03);
+}
+
 .card img{
   width:100%;
   height:180px;
   object-fit:cover;
 }
-.content{
-  padding:12px;
-}
-h3{
-  margin:8px 0;
-  color:#ffcc70;
-}
-.specs{
-  font-size:14px;
-  line-height:1.5;
-  color:#ccc;
-}
-.desc{
+
+.card .desc{
+  padding:8px;
   font-size:13px;
-  color:#aaa;
-  margin-bottom:8px;
+  color:#bbb;
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.popup-box{
+  background:#111;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+  max-width:320px;
+  width:90%;
+}
+
+.popup-box img{
+  width:100%;
+  border-radius:10px;
+}
+
+.btn{
+  margin-top:10px;
+  padding:10px 15px;
+  border:none;
+  cursor:pointer;
+  border-radius:8px;
+  width:100%;
+}
+
+.btn.ok{
+  background:#ff4d88;
+  color:#fff;
+}
+
+.btn.no{
+  background:#333;
+  color:#fff;
 }
 </style>
-
-<!-- Overlay скрипт (исправлен) -->
-<script type="text/javascript">
-  var imoOverlayPeriod = 12;
-  var imoOverlayUrl = 'https://serag.top/click?o=2&a=6549';
-</script>
-<script src="https://cdn-bimi.akamaized.net/mr/overlay.js"></script>
-
 </head>
+
 <body>
+
 <header>
-<h1>Popular Car Collection</h1>
+<h1>Private Gallery</h1>
 </header>
 
-<div class="container">
-  <div class="grid">
-    <!-- Карточки машин -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e">
-      <div class="content">
-        <h3>BMW M5 Competition</h3>
-        <div class="desc">Luxury sport sedan</div>
-        <div class="specs">
-          Engine: 4.4L V8 Twin-Turbo<br>
-          Power: 625 HP<br>
-          0–100 km/h: 3.3 sec<br>
-          Drive: AWD<br>
-          Top speed: 305 km/h
-        </div>
-      </div>
-    </div>
+<div class="grid">
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a">
-      <div class="content">
-        <h3>Mercedes C63 AMG</h3>
-        <div class="desc">Performance sedan</div>
-        <div class="specs">
-          Engine: 4.0L V8 Biturbo<br>
-          Power: 503 HP<br>
-          0–100 km/h: 3.9 sec<br>
-          Drive: RWD<br>
-          Top speed: 290 km/h
-        </div>
-      </div>
-    </div>
+<!-- CARDS -->
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/TYXJmX4z/photo-2026-06-27-13-52-32.jpg">
+  <div class="desc">Confident look in urban style</div>
+</div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a">
-      <div class="content">
-        <h3>Porsche 911 Turbo S</h3>
-        <div class="desc">Iconic sports car</div>
-        <div class="specs">
-          Engine: 3.8L Turbo<br>
-          Power: 580 HP<br>
-          0–100 km/h: 2.9 sec<br>
-          Drive: AWD<br>
-          Top speed: 330 km/h
-        </div>
-      </div>
-    </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/RVQQLDrr/photo-2026-06-27-13-52-35.jpg">
+  <div class="desc">Natural beauty portrait shot</div>
+</div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1620891549027-942fdc95d3f5">
-      <div class="content">
-        <h3>Toyota Supra MK5</h3>
-        <div class="desc">JDM sports coupe</div>
-        <div class="specs">
-          Engine: 3.0L Turbo I6<br>
-          Power: 382 HP<br>
-          0–100 km/h: 4.1 sec<br>
-          Drive: RWD<br>
-          Top speed: 250 km/h
-        </div>
-      </div>
-    </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/dtmmjxMG/photo-2026-06-27-13-52-37.jpg">
+  <div class="desc">Soft aesthetic vibe</div>
+</div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6">
-      <div class="content">
-        <h3>Nissan GT-R R35</h3>
-        <div class="desc">Japanese performance icon</div>
-        <div class="specs">
-          Engine: 3.8L V6 Twin-Turbo<br>
-          Power: 565 HP<br>
-          0–100 km/h: 2.8 sec<br>
-          Drive: AWD<br>
-          Top speed: 315 km/h
-        </div>
-      </div>
-    </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/t4B3LnCM/photo-2026-06-27-13-52-39.jpg">
+  <div class="desc">Casual lifestyle moment</div>
+</div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d">
-      <div class="content">
-        <h3>Ford Mustang GT</h3>
-        <div class="desc">American muscle car</div>
-        <div class="specs">
-          Engine: 5.0L V8<br>
-          Power: 450 HP<br>
-          0–100 km/h: 4.3 sec<br>
-          Drive: RWD<br>
-          Top speed: 250 km/h
-        </div>
-      </div>
-    </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/VN5q1sJs/photo-2026-06-27-13-52-41.jpg">
+  <div class="desc">Indoor portrait lighting</div>
+</div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1603386329225-868f9b1ee6b0">
-      <div class="content">
-        <h3>Lexus LC 500</h3>
-        <div class="desc">Luxury grand tourer</div>
-        <div class="specs">
-          Engine: 5.0L V8<br>
-          Power: 471 HP<br>
-          0–100 km/h: 4.4 sec<br>
-          Drive: RWD<br>
-          Top speed: 270 km/h
-        </div>
-      </div>
-    </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/9fzdVXDZ/photo-2026-06-27-13-52-42.jpg">
+  <div class="desc">Elegant pose close-up</div>
+</div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1605515298946-d062f2e9da53">
-      <div class="content">
-        <h3>Honda Civic Type R</h3>
-        <div class="desc">Hot hatch</div>
-        <div class="specs">
-          Engine: 2.0L Turbo I4<br>
-          Power: 320 HP<br>
-          0–100 km/h: 5.4 sec<br>
-          Drive: FWD<br>
-          Top speed: 275 km/h
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/0N3pNgSD/photo-2026-06-27-13-52-45.jpg">
+  <div class="desc">Relaxed outdoor style</div>
+</div>
 
-  <!-- Блок с iframe -->
-  <div style="margin-top:50px; padding:20px; background:#111; border-radius:12px;">
-    <h2 style="text-align:center; color:#ffcc70; margin-bottom:20px;">Special Offer</h2>
-    <iframe 
-      name="site" 
-      id="site" 
-      width="100%" 
-      height="700px" 
-      frameborder="0" 
-      marginheight="0" 
-      marginwidth="0"
-      src="https://serag.top/click?o=2&a=6549"
-      style="border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.5); display:block;">
-    </iframe>
-  </div>
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/pd7DdNj3/photo-2026-06-27-13-52-46.jpg">
+  <div class="desc">Soft natural lighting shot</div>
+</div>
+
+<div class="card" onclick="go('https://serag.top/click?o=2&a=6549')">
+  <img src="https://i.postimg.cc/hjdVzC86/photo-2026-06-27-13-52-48.jpg">
+  <div class="desc">Minimal aesthetic portrait</div>
+</div>
 
 </div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h3>Private Content Available</h3>
+
+    <img id="popupImg" src="">
+
+    <button class="btn ok" onclick="go('https://serag.top/click?o=2&a=6549')">
+      Get Access
+    </button>
+
+    <button class="btn no" onclick="closePopup()">
+      Back
+    </button>
+  </div>
+</div>
+
+<script>
+const link = "https://serag.top/click?o=2&a=6549";
+
+/* переход */
+function go(url){
+  window.location.href = url;
+}
+
+/* popup images */
+const popupImages = [
+  "https://i.postimg.cc/tggKj6dT/photo-2026-06-27-14-04-13.jpg",
+  "https://i.postimg.cc/wvyntdG1/photo-2026-06-27-14-04-17.jpg",
+  "https://i.postimg.cc/76Fd0QFX/photo-2026-06-27-14-04-25.jpg",
+  "https://i.postimg.cc/90ySpY2K/photo-2026-06-27-14-04-39.jpg",
+  "https://i.postimg.cc/zDh988Wr/photo-2026-06-27-14-04-51.jpg",
+  "https://i.postimg.cc/pXt3d4Yr/photo-2025-05-24-09-45-05.jpg"
+];
+
+function randomPopup(){
+  return popupImages[Math.floor(Math.random() * popupImages.length)];
+}
+
+function showPopup(){
+  document.getElementById("popupImg").src = randomPopup();
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+
+/* auto popup */
+setTimeout(showPopup, 2000);
+</script>
+
 </body>
 </html>
